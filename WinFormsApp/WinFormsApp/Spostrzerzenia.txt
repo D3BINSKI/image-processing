@@ -1,0 +1,3 @@
+﻿- Jak interpretować zachowanie (wyostrzanie pików) słupków histogramu przy wielokrotnym zastosowaniu blure'a?
+    Najpopularniejsze kolory pod względem zagęszczenia? Najpopularniejsze kolory pod względem ilości wystąpień?
+    
