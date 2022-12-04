@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.editorPanel = new System.Windows.Forms.Panel();
+            this.editorPictureBox = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -61,12 +62,14 @@
             this.roundBrushRadioBttn = new System.Windows.Forms.RadioButton();
             this.entireImageRadioBttn = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.blueHistogramPictureBox = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.greenHistogramPictureBox = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.redHistogramPictureBox = new System.Windows.Forms.PictureBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.blueHistogramPictureBox = new System.Windows.Forms.PictureBox();
+            this.editorPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.editorPictureBox)).BeginInit();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -78,23 +81,35 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roundBrushRadiusTrackBar)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blueHistogramPictureBox)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.greenHistogramPictureBox)).BeginInit();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.redHistogramPictureBox)).BeginInit();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.blueHistogramPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // editorPanel
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.editorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(604, 702);
-            this.panel1.TabIndex = 0;
+            this.editorPanel.AutoScroll = true;
+            this.editorPanel.BackColor = System.Drawing.Color.White;
+            this.editorPanel.Controls.Add(this.editorPictureBox);
+            this.editorPanel.Location = new System.Drawing.Point(0, 0);
+            this.editorPanel.Name = "editorPanel";
+            this.editorPanel.Size = new System.Drawing.Size(601, 702);
+            this.editorPanel.TabIndex = 0;
+            // 
+            // editorPictureBox
+            // 
+            this.editorPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.editorPictureBox.Name = "editorPictureBox";
+            this.editorPictureBox.Size = new System.Drawing.Size(604, 702);
+            this.editorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.editorPictureBox.TabIndex = 0;
+            this.editorPictureBox.TabStop = false;
             // 
             // panel2
             // 
@@ -440,6 +455,25 @@
             this.groupBox1.Text = "Histograms";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.blueHistogramPictureBox);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(3, 423);
+            this.panel3.Name = "panel3";
+            this.panel3.Padding = new System.Windows.Forms.Padding(5);
+            this.panel3.Size = new System.Drawing.Size(312, 200);
+            this.panel3.TabIndex = 3;
+            // 
+            // blueHistogramPictureBox
+            // 
+            this.blueHistogramPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.blueHistogramPictureBox.Location = new System.Drawing.Point(5, 5);
+            this.blueHistogramPictureBox.Name = "blueHistogramPictureBox";
+            this.blueHistogramPictureBox.Size = new System.Drawing.Size(302, 190);
+            this.blueHistogramPictureBox.TabIndex = 1;
+            this.blueHistogramPictureBox.TabStop = false;
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.greenHistogramPictureBox);
@@ -478,34 +512,18 @@
             this.redHistogramPictureBox.TabIndex = 1;
             this.redHistogramPictureBox.TabStop = false;
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.blueHistogramPictureBox);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(3, 423);
-            this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(5);
-            this.panel3.Size = new System.Drawing.Size(312, 200);
-            this.panel3.TabIndex = 3;
-            // 
-            // blueHistogramPictureBox
-            // 
-            this.blueHistogramPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.blueHistogramPictureBox.Location = new System.Drawing.Point(5, 5);
-            this.blueHistogramPictureBox.Name = "blueHistogramPictureBox";
-            this.blueHistogramPictureBox.Size = new System.Drawing.Size(302, 190);
-            this.blueHistogramPictureBox.TabIndex = 1;
-            this.blueHistogramPictureBox.TabStop = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1234, 702);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.editorPanel);
             this.Name = "Form1";
             this.Text = "Image Processing";
+            this.editorPanel.ResumeLayout(false);
+            this.editorPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.editorPictureBox)).EndInit();
             this.panel2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
@@ -522,19 +540,19 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roundBrushRadiusTrackBar)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.blueHistogramPictureBox)).EndInit();
             this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.greenHistogramPictureBox)).EndInit();
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.redHistogramPictureBox)).EndInit();
-            this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.blueHistogramPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Panel panel1;
+        private Panel editorPanel;
         private Panel panel2;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
@@ -573,5 +591,6 @@
         private PictureBox greenHistogramPictureBox;
         private Panel panel3;
         private PictureBox blueHistogramPictureBox;
+        private PictureBox editorPictureBox;
     }
 }
