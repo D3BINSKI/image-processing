@@ -11,5 +11,20 @@ namespace WinFormsApp
         {
 
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void roundBrushRadioBttn_CheckedChanged(object sender, EventArgs e)
+        {
+            roundBrushRadiusTrackBar.Enabled = ((RadioButton)sender).Checked;
+        }
+
+        private void customMatrixRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            customMatrixFieldsGroupBox.Enabled = ((RadioButton)sender).Checked;
+        }
     }
 }
