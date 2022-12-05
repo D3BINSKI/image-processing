@@ -7,6 +7,7 @@ namespace WinFormsApp
     {
         private EditorPanel _editorPanel;
         private HistogramPanel _histogramPanel;
+        private Region _regionSetting;
         public Form1()
         {
             InitializeComponent();
@@ -16,6 +17,7 @@ namespace WinFormsApp
             greenHistogramPictureBox.Image = new Bitmap(redHistogramPictureBox.Width, redHistogramPictureBox.Height);
             blueHistogramPictureBox.Image = new Bitmap(redHistogramPictureBox.Width, redHistogramPictureBox.Height);
             _histogramPanel = new HistogramPanel((Bitmap)_editorPanel.Image, redHistogramPictureBox, greenHistogramPictureBox, blueHistogramPictureBox);
+            _regionSetting = WinFormsApp.Region.EntireImage;
             
             _histogramPanel.Update();
             
@@ -46,13 +48,106 @@ namespace WinFormsApp
             customMatrixFieldsGroupBox.Enabled = ((RadioButton)sender).Checked;
         }
 
-        private void applyBttn_Click(object sender, EventArgs e)
+        private void applyChangesBttn_Click(object sender, EventArgs e)
         {
-            var filter = new MatrixFilter(PredefinedMatrix.Blur, 0);
-            _editorPanel.ApplyFilter(filter);
+            // var filter = new MatrixFilter(PredefinedMatrix.Blur, 0);
+            // _editorPanel.ApplyFilter(filter);
             _editorPanel.SavePreview();
             _histogramPanel.SetImage((Bitmap)_editorPanel.Image);
             _histogramPanel.Update();
         }
+
+        private void revertChangesButton_Click(object sender, EventArgs e)
+        {
+            _editorPanel.RevertChanges();
+        }
+
+        private void identityRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                if (_regionSetting == WinFormsApp.Region.EntireImage)
+                {
+                    FilterEntireRegion(new MatrixFilter(PredefinedFilter.Identity));
+                }
+            }
+            else
+            {
+                _editorPanel.RevertChanges();
+            }
+        }
+
+        private void blurRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                if (_regionSetting == WinFormsApp.Region.EntireImage)
+                {
+                    FilterEntireRegion(new MatrixFilter(PredefinedFilter.Blur));
+                }
+            }
+            else
+            {
+                _editorPanel.RevertChanges();
+            }
+        }
+
+        private void carvingRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                if (_regionSetting == WinFormsApp.Region.EntireImage)
+                {
+                    FilterEntireRegion(new MatrixFilter(PredefinedFilter.Carving));
+                }
+            }
+            else
+            {
+                _editorPanel.RevertChanges();
+            }
+        }
+
+        private void edgeDetectionRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                if (_regionSetting == WinFormsApp.Region.EntireImage)
+                {
+                    throw new NotImplementedException("Edge detection filter is not implemented");
+                }
+            }
+            else
+            {
+                _editorPanel.RevertChanges();
+            }
+        }
+        
+        private void negativeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+            {
+                if (_regionSetting == WinFormsApp.Region.EntireImage)
+                {
+                    FilterEntireRegion(new MatrixFilter(PredefinedFilter.Negative));
+                }
+            }
+            else
+            {
+                _editorPanel.RevertChanges();
+            }
+        }
+
+        private void FilterEntireRegion(MatrixFilter filter)
+        {
+            _editorPanel.ApplyFilter(filter);
+            _editorPanel.UpdateCanvas();
+        }
+    }
+
+    enum Region
+    {
+        EntireImage,
+        Brush,
+        Polygon
     }
 }

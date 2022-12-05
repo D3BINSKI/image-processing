@@ -3,37 +3,45 @@ using System.Numerics;
 
 namespace WinFormsApp;
 
-static class PredefinedMatrix
+static class PredefinedFilter
 {
-    public static readonly int[,] Negative = new int[3, 3]
+    public static readonly (int[,] matrix, int offset) Negative = (new int[3, 3]
     {
         {0, 0, 0}, 
         {0, -1, 0}, 
-        {0, 0, 0}};
+        {0, 0, 0}
+        
+    }, 255);
     
-    public static readonly int[,] Identity = new int[3, 3]
+    public static readonly (int[,] matrix, int offset) Identity = (new int[3, 3]
     {
         {1, 0, 0}, 
         {0, 1, 0}, 
-        {0, 0, 1}};
+        {0, 0, 1}}, 0);
     
-    public static readonly int[,] Blur = new int[3, 3]
+    public static readonly (int[,] matrix, int offset) Blur = (new int[3, 3]
     {
         {1, 1, 1}, 
         {1, 1, 1}, 
-        {1, 1, 1}};
+        {1, 1, 1}}, 0);
     
-    public static readonly int[,] Sharpening = new int[3, 3]
+    public static readonly (int[,] matrix, int offset) Sharpening = (new int[3, 3]
     {
         {0, -1, 0}, 
         {-1, 5, -1}, 
-        {0, -1, 0}};
+        {0, -1, 0}}, 0);
     
-    public static readonly int[,] Carving = new int[3, 3]
+    public static readonly (int[,] matrix, int offset) EdgeDetection = (new int[3, 3]
     {
         {0, 0, 0}, 
-        {0, 3, 1}, 
-        {0, 1, 1}};
+        {0, 3, -1}, 
+        {0, -1, -1}}, 0);
+    
+    public static readonly (int[,] matrix, int offset) Carving = (new int[3, 3]
+    {
+        {-1, -1, 0}, 
+        {-1, 2, 1}, 
+        {0, 1, 1}}, 0);
     
 }
 
@@ -46,6 +54,12 @@ public class MatrixFilter
     {
         _filterMatrix = matrix;
         _offset = offset;
+    }
+    
+    public MatrixFilter((int[,] matrix, int offset) filter)
+    {
+        _filterMatrix = filter.matrix;
+        _offset = filter.offset;
     }
 
     public Image Apply(Image refImage)
@@ -85,9 +99,9 @@ public class MatrixFilter
 
         divider = divider == 0 ? 1 : Math.Abs(divider);
 
-        return Color.FromArgb(
-            Math.Min(red/divider, 255),
-            Math.Min(green/divider, 255),
-            Math.Min(blue/divider, 255));
+        return Color.FromArgb(255,
+            Math.Max(Math.Min(red/divider, 255), 0),
+            Math.Max(Math.Min(green/divider, 255), 0),
+            Math.Max(Math.Min(blue/divider, 255), 0));
     }
 }
