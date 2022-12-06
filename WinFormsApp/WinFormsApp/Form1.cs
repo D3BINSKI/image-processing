@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
+using Accessibility;
 
 namespace WinFormsApp
 {
@@ -326,6 +327,20 @@ namespace WinFormsApp
 
             UpdateCustomMatrix();
         }
+        
+        private void offsetTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (((TextBox)sender).Text == "" || !customMatrixRadioButton.Checked) return;
+            
+            UpdateCustomMatrix();
+        }
+        
+        private void dividerTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (((TextBox)sender).Text == "" || !customMatrixRadioButton.Checked) return;
+            
+            UpdateCustomMatrix();
+        }
 
         private void UpdateCustomMatrix()
         {
@@ -346,7 +361,11 @@ namespace WinFormsApp
                         Convert.ToInt32(matrix33TextBox.Text)
                     }
                 };
-                _currentFilter = new MatrixFilter(matrix, Convert.ToInt32(offsetTextBox.Text));
+                if (!countDividerCheckBox.Checked)
+                    _currentFilter = new MatrixFilter(matrix, Convert.ToInt32(offsetTextBox.Text),
+                        Convert.ToInt32(dividerTextBox.Text));
+                else
+                    _currentFilter = new MatrixFilter(matrix, Convert.ToInt32(offsetTextBox.Text));
                 _editorPanel.SetFilter(_currentFilter);
 
                 switch (_regionSetting)
@@ -388,8 +407,25 @@ namespace WinFormsApp
                     _editorPanel.SetImage(new Bitmap(Image.FromFile(filePath)));
                     _histogramPanel.SetImage((Bitmap)_editorPanel.Image);
                     _histogramPanel.Update();
+                    
+                    _editorPanel.SetFilter(_currentFilter);
                 }
             }
+        }
+
+        private void countDividerCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateCustomMatrix();
+        }
+
+        private void generateImageButton_Click(object sender, EventArgs e)
+        {
+            var imageGenerator = new HSVStripesGenerator(new Range(0, 360), new Range(0, 1000), 500, 50,
+                new Size(editorPictureBox.Width, editorPictureBox.Height));
+            
+            _editorPanel.SetImage(imageGenerator.GetImage());
+            _histogramPanel.SetImage((Bitmap)_editorPanel.Image);
+            _histogramPanel.Update();
         }
     }
 
@@ -398,5 +434,146 @@ namespace WinFormsApp
         EntireImage,
         Brush,
         Polygon
+    }
+
+    public class HSVStripesGenerator
+    {
+        private int _vValue;
+        private Range _hRange;
+        private Range _sRange;
+        private int _stripesNumber;
+        private Size _imageSize;
+
+        private HSVStripe[] _hsvStripes;
+
+        public int V { get => _vValue; set => _vValue = value; }
+
+        public HSVStripesGenerator(Range hRange, Range sRange, int v, int n, Size size)
+        {
+            _hRange = hRange;
+            _sRange = sRange;
+            _vValue = v;
+            _stripesNumber = n;
+            _imageSize = size;
+            _hsvStripes = new HSVStripe[_stripesNumber];
+            
+            InitializeStripes();
+        }
+
+        private void InitializeStripes()
+        {
+            var stripeSize = new Size(_imageSize.Width / _stripesNumber, _imageSize.Height);
+            var hIter = (_hRange.End.Value - _hRange.Start.Value) / _stripesNumber;
+            for (int i = 0; i < _stripesNumber; i++)
+            {
+                var h = _hRange.Start.Value + hIter * i;
+                _hsvStripes[i] = new HSVStripe(stripeSize, h, _vValue, _sRange);
+            }
+        }
+
+        public Image GetImage()
+        {
+            var bitmap = new Bitmap(_imageSize.Width, _imageSize.Height);
+            var x = 0;
+            var xIter = _imageSize.Width / _stripesNumber;
+            using var g = Graphics.FromImage(bitmap);
+            foreach (var stripe in _hsvStripes)
+            {
+                var stripeImage = stripe.GetStripe(100);
+                
+                g.FillRectangle(new TextureBrush(stripeImage), x, 0, xIter, _imageSize.Height);
+                x += xIter;
+            }
+
+            return bitmap;
+        }
+
+    }
+
+    public class HSVStripe
+    {
+        private Size _size;
+
+        private int _h;
+        private int _v;
+        private Range _sRange;
+        
+        public int V { get => _v; set => _v = value; }
+
+        public HSVStripe(Size size, int h, int v, Range sRange)
+        {
+            _size = size;
+            _h = h;
+            _v = v;
+            _sRange = sRange;
+        }
+        
+        public Image GetStripe(int n)
+        {
+            var bitmap = new Bitmap(_size.Width, _size.Height);
+
+            var colors = HSV.GetRGBColors(_h, _v, _sRange, n);
+
+            var colorWidth = _size.Height / colors.Length;
+
+            using var g = Graphics.FromImage(bitmap);
+            
+            var y = 0;
+            foreach (var color in colors)
+            {
+                var brush = new SolidBrush(color);
+                g.FillRectangle(brush, 0, y, bitmap.Width, colorWidth*2);
+
+                y += colorWidth;
+            }
+
+            return bitmap;
+        }
+        
+    }
+
+    public class HSV
+    {
+        public static Color[] GetRGBColors(int h, int v, Range sRange, int n)
+        {
+            var colors = new Color[n];
+            var sIter = (sRange.End.Value - sRange.Start.Value) / n;
+            for (int i = 0; i < n; i++)
+            {
+                var s = sRange.Start.Value + i * sIter;
+                var C = Math.Max(Math.Min(v * s, 255), 0);
+                var X = Math.Max(Math.Min(C * (1 - Math.Abs((h / 60) % 2 - 1)), 255), 0);
+                var m = v - C;
+                
+                if (h is >= 0 and < 60)
+                {
+                    colors[i] = Color.FromArgb(255, C, X, 0);
+                }
+                else if(h is >= 60 and < 120)
+                {
+                    colors[i] = Color.FromArgb(255, X, C, 0);
+                }
+                else if(h is >= 120 and < 180)
+                {
+                    colors[i] = Color.FromArgb(255, 0, C, X);
+                }
+                else if(h is >= 180 and < 240)
+                {
+                    colors[i] = Color.FromArgb(255, 0, X, C);
+                }
+                else if(h is >= 240 and < 300)
+                {
+                    colors[i] = Color.FromArgb(255, X, 0, C);
+                }
+                else if(h is >= 300 and < 360)
+                {
+                    colors[i] = Color.FromArgb(255, C, 0, X);
+                }
+
+                i++;
+            }
+
+            return colors;
+        }
     }
 }

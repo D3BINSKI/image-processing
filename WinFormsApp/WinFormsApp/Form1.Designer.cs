@@ -33,10 +33,12 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.changeImageButton = new System.Windows.Forms.Button();
             this.revertChangesButton = new System.Windows.Forms.Button();
             this.applyChangesBttn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.countDividerCheckBox = new System.Windows.Forms.CheckBox();
             this.dividerPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.dividerTextBox = new System.Windows.Forms.TextBox();
@@ -75,7 +77,7 @@
             this.greenHistogramPictureBox = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.redHistogramPictureBox = new System.Windows.Forms.PictureBox();
-            this.changeImageButton = new System.Windows.Forms.Button();
+            this.generateImageButton = new System.Windows.Forms.Button();
             this.editorPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorPictureBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -150,6 +152,7 @@
             // panel6
             // 
             this.panel6.AutoScroll = true;
+            this.panel6.Controls.Add(this.generateImageButton);
             this.panel6.Controls.Add(this.changeImageButton);
             this.panel6.Controls.Add(this.revertChangesButton);
             this.panel6.Controls.Add(this.applyChangesBttn);
@@ -161,12 +164,23 @@
             this.panel6.Size = new System.Drawing.Size(247, 676);
             this.panel6.TabIndex = 0;
             // 
+            // changeImageButton
+            // 
+            this.changeImageButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.changeImageButton.Location = new System.Drawing.Point(0, 612);
+            this.changeImageButton.Name = "changeImageButton";
+            this.changeImageButton.Size = new System.Drawing.Size(226, 29);
+            this.changeImageButton.TabIndex = 6;
+            this.changeImageButton.Text = "Change image";
+            this.changeImageButton.UseVisualStyleBackColor = true;
+            this.changeImageButton.Click += new System.EventHandler(this.changeImageButton_Click);
+            // 
             // revertChangesButton
             // 
             this.revertChangesButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.revertChangesButton.Location = new System.Drawing.Point(0, 618);
+            this.revertChangesButton.Location = new System.Drawing.Point(0, 641);
             this.revertChangesButton.Name = "revertChangesButton";
-            this.revertChangesButton.Size = new System.Drawing.Size(247, 29);
+            this.revertChangesButton.Size = new System.Drawing.Size(226, 29);
             this.revertChangesButton.TabIndex = 5;
             this.revertChangesButton.Text = "Revert changes";
             this.revertChangesButton.UseVisualStyleBackColor = true;
@@ -175,9 +189,9 @@
             // applyChangesBttn
             // 
             this.applyChangesBttn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.applyChangesBttn.Location = new System.Drawing.Point(0, 647);
+            this.applyChangesBttn.Location = new System.Drawing.Point(0, 670);
             this.applyChangesBttn.Name = "applyChangesBttn";
-            this.applyChangesBttn.Size = new System.Drawing.Size(247, 29);
+            this.applyChangesBttn.Size = new System.Drawing.Size(226, 29);
             this.applyChangesBttn.TabIndex = 4;
             this.applyChangesBttn.Text = "Apply changes";
             this.applyChangesBttn.UseVisualStyleBackColor = true;
@@ -191,20 +205,33 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(0, 155);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(247, 408);
+            this.groupBox4.Size = new System.Drawing.Size(226, 428);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Filtering Matrix Properties";
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.countDividerCheckBox);
             this.panel8.Controls.Add(this.dividerPanel);
             this.panel8.Controls.Add(this.offsetPanel);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 320);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(241, 77);
+            this.panel8.Size = new System.Drawing.Size(220, 105);
             this.panel8.TabIndex = 16;
+            // 
+            // countDividerCheckBox
+            // 
+            this.countDividerCheckBox.AutoSize = true;
+            this.countDividerCheckBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.countDividerCheckBox.Location = new System.Drawing.Point(0, 67);
+            this.countDividerCheckBox.Name = "countDividerCheckBox";
+            this.countDividerCheckBox.Size = new System.Drawing.Size(220, 24);
+            this.countDividerCheckBox.TabIndex = 13;
+            this.countDividerCheckBox.Text = "Automatically compute divider";
+            this.countDividerCheckBox.UseVisualStyleBackColor = true;
+            this.countDividerCheckBox.CheckedChanged += new System.EventHandler(this.countDividerCheckBox_CheckedChanged);
             // 
             // dividerPanel
             // 
@@ -214,7 +241,7 @@
             this.dividerPanel.Enabled = false;
             this.dividerPanel.Location = new System.Drawing.Point(0, 32);
             this.dividerPanel.Name = "dividerPanel";
-            this.dividerPanel.Size = new System.Drawing.Size(241, 35);
+            this.dividerPanel.Size = new System.Drawing.Size(220, 35);
             this.dividerPanel.TabIndex = 12;
             // 
             // label2
@@ -231,10 +258,11 @@
             // dividerTextBox
             // 
             this.dividerTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dividerTextBox.Location = new System.Drawing.Point(191, 0);
+            this.dividerTextBox.Location = new System.Drawing.Point(170, 0);
             this.dividerTextBox.Name = "dividerTextBox";
             this.dividerTextBox.Size = new System.Drawing.Size(50, 27);
             this.dividerTextBox.TabIndex = 2;
+            this.dividerTextBox.TextChanged += new System.EventHandler(this.dividerTextBox_TextChanged);
             // 
             // offsetPanel
             // 
@@ -244,7 +272,7 @@
             this.offsetPanel.Enabled = false;
             this.offsetPanel.Location = new System.Drawing.Point(0, 0);
             this.offsetPanel.Name = "offsetPanel";
-            this.offsetPanel.Size = new System.Drawing.Size(241, 32);
+            this.offsetPanel.Size = new System.Drawing.Size(220, 32);
             this.offsetPanel.TabIndex = 11;
             // 
             // label1
@@ -261,10 +289,11 @@
             // offsetTextBox
             // 
             this.offsetTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.offsetTextBox.Location = new System.Drawing.Point(191, 0);
+            this.offsetTextBox.Location = new System.Drawing.Point(170, 0);
             this.offsetTextBox.Name = "offsetTextBox";
             this.offsetTextBox.Size = new System.Drawing.Size(50, 27);
             this.offsetTextBox.TabIndex = 1;
+            this.offsetTextBox.TextChanged += new System.EventHandler(this.offsetTextBox_TextChanged);
             // 
             // customMatrixFieldsGroupBox
             // 
@@ -273,7 +302,7 @@
             this.customMatrixFieldsGroupBox.Enabled = false;
             this.customMatrixFieldsGroupBox.Location = new System.Drawing.Point(3, 171);
             this.customMatrixFieldsGroupBox.Name = "customMatrixFieldsGroupBox";
-            this.customMatrixFieldsGroupBox.Size = new System.Drawing.Size(241, 149);
+            this.customMatrixFieldsGroupBox.Size = new System.Drawing.Size(220, 149);
             this.customMatrixFieldsGroupBox.TabIndex = 15;
             this.customMatrixFieldsGroupBox.TabStop = false;
             this.customMatrixFieldsGroupBox.Text = "Custom Matrix";
@@ -381,7 +410,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(3, 23);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(241, 148);
+            this.panel10.Size = new System.Drawing.Size(220, 148);
             this.panel10.TabIndex = 13;
             // 
             // customMatrixRadioButton
@@ -390,7 +419,7 @@
             this.customMatrixRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.customMatrixRadioButton.Location = new System.Drawing.Point(0, 120);
             this.customMatrixRadioButton.Name = "customMatrixRadioButton";
-            this.customMatrixRadioButton.Size = new System.Drawing.Size(241, 24);
+            this.customMatrixRadioButton.Size = new System.Drawing.Size(220, 24);
             this.customMatrixRadioButton.TabIndex = 15;
             this.customMatrixRadioButton.TabStop = true;
             this.customMatrixRadioButton.Tag = "matrixProps";
@@ -404,7 +433,7 @@
             this.negativeRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.negativeRadioButton.Location = new System.Drawing.Point(0, 96);
             this.negativeRadioButton.Name = "negativeRadioButton";
-            this.negativeRadioButton.Size = new System.Drawing.Size(241, 24);
+            this.negativeRadioButton.Size = new System.Drawing.Size(220, 24);
             this.negativeRadioButton.TabIndex = 14;
             this.negativeRadioButton.TabStop = true;
             this.negativeRadioButton.Tag = "matrixProps";
@@ -418,7 +447,7 @@
             this.edgeDetectionRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.edgeDetectionRadioButton.Location = new System.Drawing.Point(0, 72);
             this.edgeDetectionRadioButton.Name = "edgeDetectionRadioButton";
-            this.edgeDetectionRadioButton.Size = new System.Drawing.Size(241, 24);
+            this.edgeDetectionRadioButton.Size = new System.Drawing.Size(220, 24);
             this.edgeDetectionRadioButton.TabIndex = 12;
             this.edgeDetectionRadioButton.TabStop = true;
             this.edgeDetectionRadioButton.Tag = "matrixProps";
@@ -432,7 +461,7 @@
             this.carvingRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.carvingRadioButton.Location = new System.Drawing.Point(0, 48);
             this.carvingRadioButton.Name = "carvingRadioButton";
-            this.carvingRadioButton.Size = new System.Drawing.Size(241, 24);
+            this.carvingRadioButton.Size = new System.Drawing.Size(220, 24);
             this.carvingRadioButton.TabIndex = 11;
             this.carvingRadioButton.TabStop = true;
             this.carvingRadioButton.Tag = "matrixProps";
@@ -446,7 +475,7 @@
             this.blurRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.blurRadioButton.Location = new System.Drawing.Point(0, 24);
             this.blurRadioButton.Name = "blurRadioButton";
-            this.blurRadioButton.Size = new System.Drawing.Size(241, 24);
+            this.blurRadioButton.Size = new System.Drawing.Size(220, 24);
             this.blurRadioButton.TabIndex = 10;
             this.blurRadioButton.TabStop = true;
             this.blurRadioButton.Tag = "matrixProps";
@@ -460,7 +489,7 @@
             this.identityRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.identityRadioButton.Location = new System.Drawing.Point(0, 0);
             this.identityRadioButton.Name = "identityRadioButton";
-            this.identityRadioButton.Size = new System.Drawing.Size(241, 24);
+            this.identityRadioButton.Size = new System.Drawing.Size(220, 24);
             this.identityRadioButton.TabIndex = 9;
             this.identityRadioButton.TabStop = true;
             this.identityRadioButton.Tag = "matrixProps";
@@ -478,7 +507,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(247, 155);
+            this.groupBox3.Size = new System.Drawing.Size(226, 155);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtering region";
@@ -487,7 +516,7 @@
             // 
             this.addPolygonButton.Dock = System.Windows.Forms.DockStyle.Right;
             this.addPolygonButton.Enabled = false;
-            this.addPolygonButton.Location = new System.Drawing.Point(166, 127);
+            this.addPolygonButton.Location = new System.Drawing.Point(145, 127);
             this.addPolygonButton.Name = "addPolygonButton";
             this.addPolygonButton.Size = new System.Drawing.Size(78, 25);
             this.addPolygonButton.TabIndex = 6;
@@ -517,7 +546,7 @@
             this.roundBrushRadiusTrackBar.Maximum = 100;
             this.roundBrushRadiusTrackBar.Minimum = 30;
             this.roundBrushRadiusTrackBar.Name = "roundBrushRadiusTrackBar";
-            this.roundBrushRadiusTrackBar.Size = new System.Drawing.Size(241, 56);
+            this.roundBrushRadiusTrackBar.Size = new System.Drawing.Size(220, 56);
             this.roundBrushRadiusTrackBar.TabIndex = 2;
             this.roundBrushRadiusTrackBar.Value = 30;
             // 
@@ -527,7 +556,7 @@
             this.roundBrushRadioBttn.Dock = System.Windows.Forms.DockStyle.Top;
             this.roundBrushRadioBttn.Location = new System.Drawing.Point(3, 47);
             this.roundBrushRadioBttn.Name = "roundBrushRadioBttn";
-            this.roundBrushRadioBttn.Size = new System.Drawing.Size(241, 24);
+            this.roundBrushRadioBttn.Size = new System.Drawing.Size(220, 24);
             this.roundBrushRadioBttn.TabIndex = 1;
             this.roundBrushRadioBttn.TabStop = true;
             this.roundBrushRadioBttn.Tag = "region";
@@ -541,7 +570,7 @@
             this.entireImageRadioBttn.Dock = System.Windows.Forms.DockStyle.Top;
             this.entireImageRadioBttn.Location = new System.Drawing.Point(3, 23);
             this.entireImageRadioBttn.Name = "entireImageRadioBttn";
-            this.entireImageRadioBttn.Size = new System.Drawing.Size(241, 24);
+            this.entireImageRadioBttn.Size = new System.Drawing.Size(220, 24);
             this.entireImageRadioBttn.TabIndex = 0;
             this.entireImageRadioBttn.TabStop = true;
             this.entireImageRadioBttn.Tag = "region";
@@ -630,16 +659,16 @@
             this.redHistogramPictureBox.TabIndex = 1;
             this.redHistogramPictureBox.TabStop = false;
             // 
-            // changeImageButton
+            // generateImageButton
             // 
-            this.changeImageButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.changeImageButton.Location = new System.Drawing.Point(0, 589);
-            this.changeImageButton.Name = "changeImageButton";
-            this.changeImageButton.Size = new System.Drawing.Size(247, 29);
-            this.changeImageButton.TabIndex = 6;
-            this.changeImageButton.Text = "Change image";
-            this.changeImageButton.UseVisualStyleBackColor = true;
-            this.changeImageButton.Click += new System.EventHandler(this.changeImageButton_Click);
+            this.generateImageButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.generateImageButton.Location = new System.Drawing.Point(0, 583);
+            this.generateImageButton.Name = "generateImageButton";
+            this.generateImageButton.Size = new System.Drawing.Size(226, 29);
+            this.generateImageButton.TabIndex = 7;
+            this.generateImageButton.Text = "Generate image";
+            this.generateImageButton.UseVisualStyleBackColor = true;
+            this.generateImageButton.Click += new System.EventHandler(this.generateImageButton_Click);
             // 
             // Form1
             // 
@@ -658,6 +687,7 @@
             this.panel6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.dividerPanel.ResumeLayout(false);
             this.dividerPanel.PerformLayout();
             this.offsetPanel.ResumeLayout(false);
@@ -732,5 +762,7 @@
         private Button addPolygonButton;
         private RadioButton PolygonRegionRadioBttn;
         private Button changeImageButton;
+        private CheckBox countDividerCheckBox;
+        private Button generateImageButton;
     }
 }
