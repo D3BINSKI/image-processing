@@ -75,6 +75,7 @@
             this.greenHistogramPictureBox = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.redHistogramPictureBox = new System.Windows.Forms.PictureBox();
+            this.changeImageButton = new System.Windows.Forms.Button();
             this.editorPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.editorPictureBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -149,6 +150,7 @@
             // panel6
             // 
             this.panel6.AutoScroll = true;
+            this.panel6.Controls.Add(this.changeImageButton);
             this.panel6.Controls.Add(this.revertChangesButton);
             this.panel6.Controls.Add(this.applyChangesBttn);
             this.panel6.Controls.Add(this.groupBox4);
@@ -302,6 +304,7 @@
             this.matrix11TextBox.Name = "matrix11TextBox";
             this.matrix11TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix11TextBox.TabIndex = 9;
+            this.matrix11TextBox.TextChanged += new System.EventHandler(this.matrix11TextBox_TextChanged);
             // 
             // matrix12TextBox
             // 
@@ -309,6 +312,7 @@
             this.matrix12TextBox.Name = "matrix12TextBox";
             this.matrix12TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix12TextBox.TabIndex = 10;
+            this.matrix12TextBox.TextChanged += new System.EventHandler(this.matrix12TextBox_TextChanged);
             // 
             // matrix13TextBox
             // 
@@ -316,6 +320,7 @@
             this.matrix13TextBox.Name = "matrix13TextBox";
             this.matrix13TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix13TextBox.TabIndex = 11;
+            this.matrix13TextBox.TextChanged += new System.EventHandler(this.matrix13TextBox_TextChanged);
             // 
             // matrix21TextBox
             // 
@@ -323,6 +328,7 @@
             this.matrix21TextBox.Name = "matrix21TextBox";
             this.matrix21TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix21TextBox.TabIndex = 12;
+            this.matrix21TextBox.TextChanged += new System.EventHandler(this.matrix21TextBox_TextChanged);
             // 
             // matrix22TextBox
             // 
@@ -330,6 +336,7 @@
             this.matrix22TextBox.Name = "matrix22TextBox";
             this.matrix22TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix22TextBox.TabIndex = 13;
+            this.matrix22TextBox.TextChanged += new System.EventHandler(this.matrix22TextBox_TextChanged);
             // 
             // matrix23TextBox
             // 
@@ -337,6 +344,7 @@
             this.matrix23TextBox.Name = "matrix23TextBox";
             this.matrix23TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix23TextBox.TabIndex = 14;
+            this.matrix23TextBox.TextChanged += new System.EventHandler(this.matrix23TextBox_TextChanged);
             // 
             // matrix31TextBox
             // 
@@ -344,6 +352,7 @@
             this.matrix31TextBox.Name = "matrix31TextBox";
             this.matrix31TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix31TextBox.TabIndex = 15;
+            this.matrix31TextBox.TextChanged += new System.EventHandler(this.matrix31TextBox_TextChanged);
             // 
             // matrix32TextBox
             // 
@@ -351,6 +360,7 @@
             this.matrix32TextBox.Name = "matrix32TextBox";
             this.matrix32TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix32TextBox.TabIndex = 16;
+            this.matrix32TextBox.TextChanged += new System.EventHandler(this.matrix32TextBox_TextChanged);
             // 
             // matrix33TextBox
             // 
@@ -358,6 +368,7 @@
             this.matrix33TextBox.Name = "matrix33TextBox";
             this.matrix33TextBox.Size = new System.Drawing.Size(50, 27);
             this.matrix33TextBox.TabIndex = 17;
+            this.matrix33TextBox.TextChanged += new System.EventHandler(this.matrix33TextBox_TextChanged);
             // 
             // panel10
             // 
@@ -503,9 +514,12 @@
             this.roundBrushRadiusTrackBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.roundBrushRadiusTrackBar.Enabled = false;
             this.roundBrushRadiusTrackBar.Location = new System.Drawing.Point(3, 71);
+            this.roundBrushRadiusTrackBar.Maximum = 100;
+            this.roundBrushRadiusTrackBar.Minimum = 30;
             this.roundBrushRadiusTrackBar.Name = "roundBrushRadiusTrackBar";
             this.roundBrushRadiusTrackBar.Size = new System.Drawing.Size(241, 56);
             this.roundBrushRadiusTrackBar.TabIndex = 2;
+            this.roundBrushRadiusTrackBar.Value = 30;
             // 
             // roundBrushRadioBttn
             // 
@@ -616,6 +630,17 @@
             this.redHistogramPictureBox.TabIndex = 1;
             this.redHistogramPictureBox.TabStop = false;
             // 
+            // changeImageButton
+            // 
+            this.changeImageButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.changeImageButton.Location = new System.Drawing.Point(0, 589);
+            this.changeImageButton.Name = "changeImageButton";
+            this.changeImageButton.Size = new System.Drawing.Size(247, 29);
+            this.changeImageButton.TabIndex = 6;
+            this.changeImageButton.Text = "Change image";
+            this.changeImageButton.UseVisualStyleBackColor = true;
+            this.changeImageButton.Click += new System.EventHandler(this.changeImageButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -706,5 +731,6 @@
         private TextBox offsetTextBox;
         private Button addPolygonButton;
         private RadioButton PolygonRegionRadioBttn;
+        private Button changeImageButton;
     }
 }

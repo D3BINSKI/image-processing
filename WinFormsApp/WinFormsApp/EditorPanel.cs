@@ -11,7 +11,7 @@ public class EditorPanel
     private Bitmap? _modifiedEditorBitmap;
     private List<PointF[]> _polygons;
     private List<PointF>? _newPolygon;
-    private List<PointF> _brushPoints;
+    private List<(PointF point, int radius)> _brushPoints;
     private MatrixFilter _currentFilter;
 
     public Image Image => _savedEditorBitmap;
@@ -23,9 +23,18 @@ public class EditorPanel
         _savedEditorBitmap = new Bitmap(image);
         _modifiedEditorBitmap = _savedEditorBitmap.Clone() as Bitmap;
         _polygons = new List<PointF[]>();
-        _brushPoints = new List<PointF>();
+        _brushPoints = new List<(PointF, int)>();
 
         UpdateCanvas();            
+    }
+
+    public void SetImage(Image image)
+    {
+        RevertChanges();
+        _editorPictureBox.Image = image;
+        _savedEditorBitmap = new Bitmap(image);
+        _modifiedEditorBitmap = _savedEditorBitmap.Clone() as Bitmap;
+        _editorPictureBox.Refresh();
     }
 
     public static EditorPanel FromPath(string path, PictureBox pictureBox) => new EditorPanel(Image.FromFile(path), pictureBox);
@@ -55,7 +64,7 @@ public class EditorPanel
         var g = Graphics.FromImage(_editorPictureBox.Image);
         foreach (var brushPoint in _brushPoints)
         {
-            g.FillEllipse(brush, brushPoint.X, brushPoint.Y, 10, 10);
+            g.FillEllipse(brush, brushPoint.point.X - 20, brushPoint.point.Y - 20, brushPoint.radius, brushPoint.radius);
         }
         _editorPictureBox.Refresh();
     }
@@ -77,12 +86,12 @@ public class EditorPanel
         _editorPictureBox.Refresh();
     }
     
-    public void UpdateBrushArea(PointF point)
+    public void UpdateBrushArea(PointF point, int radius)
     {
         using var g = Graphics.FromImage(_editorPictureBox.Image);
         var brush = new TextureBrush(_modifiedEditorBitmap!);
         
-        g.FillEllipse(brush, point.X-20, point.Y-20, 30, 30);
+        g.FillEllipse(brush, point.X-20, point.Y-20, radius, radius);
         _editorPictureBox.Refresh();
     }
 
@@ -123,10 +132,10 @@ public class EditorPanel
         return true;
     }
 
-    public void Brush(PointF point)
+    public void Brush(PointF point, int radius)
     {
-        // _brushPoints!.Add(point);
-        UpdateBrushArea(point);
+        _brushPoints!.Add((point, radius));
+        UpdateBrushArea(point, radius);
     }
 
     private void DrawPolygonPreview()
