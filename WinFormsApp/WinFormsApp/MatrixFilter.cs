@@ -15,9 +15,9 @@ static class PredefinedFilter
     
     public static readonly (int[,] matrix, int offset) Identity = (new int[3, 3]
     {
-        {1, 0, 0}, 
+        {0, 0, 0}, 
         {0, 1, 0}, 
-        {0, 0, 1}}, 0);
+        {0, 0, 0}}, 0);
     
     public static readonly (int[,] matrix, int offset) Blur = (new int[3, 3]
     {
@@ -33,9 +33,9 @@ static class PredefinedFilter
     
     public static readonly (int[,] matrix, int offset) EdgeDetection = (new int[3, 3]
     {
-        {0, 0, 0}, 
-        {0, 3, -1}, 
-        {0, -1, -1}}, 0);
+        {-1, 0, 1}, 
+        {-1, 0, 1}, 
+        {-1, 0, 1}}, 0);
     
     public static readonly (int[,] matrix, int offset) Carving = (new int[3, 3]
     {

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing.Design;
 using System.Numerics;
 
 namespace WinFormsApp;
@@ -8,6 +9,10 @@ public class EditorPanel
     private PictureBox _editorPictureBox;
     private Bitmap _savedEditorBitmap;
     private Bitmap? _modifiedEditorBitmap;
+    private List<PointF[]> _polygons;
+    private List<PointF>? _newPolygon;
+    private List<PointF> _brushPoints;
+    private MatrixFilter _currentFilter;
 
     public Image Image => _savedEditorBitmap;
 
@@ -17,6 +22,8 @@ public class EditorPanel
         _editorPictureBox.Image = image;
         _savedEditorBitmap = new Bitmap(image);
         _modifiedEditorBitmap = _savedEditorBitmap.Clone() as Bitmap;
+        _polygons = new List<PointF[]>();
+        _brushPoints = new List<PointF>();
 
         UpdateCanvas();            
     }
@@ -33,20 +40,110 @@ public class EditorPanel
 
     public void ApplyFilter(MatrixFilter filter)
     {
-        _modifiedEditorBitmap = (Bitmap)filter.Apply(_modifiedEditorBitmap!);
+         _editorPictureBox.Image = (Bitmap)filter.Apply(_savedEditorBitmap!);
+         _editorPictureBox.Refresh();
+    }
+    
+    public void SetFilter(MatrixFilter filter)
+    {
+        _currentFilter = filter;
+        _modifiedEditorBitmap = (Bitmap)filter.Apply(_savedEditorBitmap!);
+
+        if (_brushPoints.Count <= 0) return;
+        
+        var brush = new TextureBrush(_modifiedEditorBitmap);
+        var g = Graphics.FromImage(_editorPictureBox.Image);
+        foreach (var brushPoint in _brushPoints)
+        {
+            g.FillEllipse(brush, brushPoint.X, brushPoint.Y, 10, 10);
+        }
+        _editorPictureBox.Refresh();
+    }
+
+    public void UpdatePolygonArea(MatrixFilter filter)
+    {
+        if (_polygons.Count == 0)
+            return;
+        
+        var filteredImage = filter.Apply(_savedEditorBitmap);
+        using var g = Graphics.FromImage(_editorPictureBox.Image);
+        
+        var brush = new TextureBrush(filteredImage);
+
+        foreach (var polygon in _polygons)
+        {
+            g.FillPolygon(brush, polygon);
+        }
+        _editorPictureBox.Refresh();
+    }
+    
+    public void UpdateBrushArea(PointF point)
+    {
+        using var g = Graphics.FromImage(_editorPictureBox.Image);
+        var brush = new TextureBrush(_modifiedEditorBitmap!);
+        
+        g.FillEllipse(brush, point.X-20, point.Y-20, 30, 30);
+        _editorPictureBox.Refresh();
     }
 
     public void SavePreview()
     {
-        if (_modifiedEditorBitmap != null)
-        {
-            _savedEditorBitmap = (_modifiedEditorBitmap.Clone() as Bitmap)!;
-        }
+        _savedEditorBitmap = (_editorPictureBox.Image.Clone() as Bitmap)!;
+        _modifiedEditorBitmap = (Bitmap)_currentFilter.Apply(_savedEditorBitmap);
+        _polygons.Clear();
+        _brushPoints.Clear();
     }
 
     public void RevertChanges()
     {
-        _modifiedEditorBitmap = _savedEditorBitmap.Clone() as Bitmap;
-        UpdateCanvas();
+        _editorPictureBox.Image = _savedEditorBitmap.Clone() as Bitmap;
+        _editorPictureBox.Refresh();
+        _polygons.Clear();
+        _brushPoints.Clear();
+    }
+    
+    public bool AddPointToPolygon(PointF point)
+    {
+        _newPolygon ??= new List<PointF>();
+
+        if (_newPolygon.Count < 3)
+        {
+            _newPolygon.Add(point);
+        }
+        else if(Math.Abs(_newPolygon[0].X - _newPolygon[^1].X) < 10 && Math.Abs(_newPolygon[0].Y - _newPolygon[^1].Y) < 10)
+        {
+            _polygons.Add(_newPolygon.ToArray());
+            _newPolygon = null;
+            ClearPolygonPreview();
+            return false;
+        }
+
+        _newPolygon.Add(point);
+        DrawPolygonPreview();
+        return true;
+    }
+
+    public void Brush(PointF point)
+    {
+        // _brushPoints!.Add(point);
+        UpdateBrushArea(point);
+    }
+
+    private void DrawPolygonPreview()
+    {
+        if (_newPolygon == null)
+            return;
+        
+        using var g = Graphics.FromImage(_editorPictureBox.Image);
+        var pen = new Pen(Brushes.Black, 3);
+        g.DrawLines(pen, _newPolygon.ToArray());
+        _editorPictureBox.Refresh();
+    }
+    
+    private void ClearPolygonPreview()
+    {
+        using var g = Graphics.FromImage(_editorPictureBox.Image);
+        g.DrawImage(_savedEditorBitmap, 0, 0);
+        _editorPictureBox.Refresh();
     }
 }

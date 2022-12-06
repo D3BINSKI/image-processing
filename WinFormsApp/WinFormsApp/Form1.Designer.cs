@@ -36,6 +36,13 @@
             this.revertChangesButton = new System.Windows.Forms.Button();
             this.applyChangesBttn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.dividerPanel = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dividerTextBox = new System.Windows.Forms.TextBox();
+            this.offsetPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.offsetTextBox = new System.Windows.Forms.TextBox();
             this.customMatrixFieldsGroupBox = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.matrix11TextBox = new System.Windows.Forms.TextBox();
@@ -54,14 +61,8 @@
             this.carvingRadioButton = new System.Windows.Forms.RadioButton();
             this.blurRadioButton = new System.Windows.Forms.RadioButton();
             this.identityRadioButton = new System.Windows.Forms.RadioButton();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dividerTextBox = new System.Windows.Forms.TextBox();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.offsetTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.addPolygonButton = new System.Windows.Forms.Button();
             this.PolygonRegionRadioBttn = new System.Windows.Forms.RadioButton();
             this.roundBrushRadiusTrackBar = new System.Windows.Forms.TrackBar();
             this.roundBrushRadioBttn = new System.Windows.Forms.RadioButton();
@@ -80,12 +81,12 @@
             this.groupBox2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.dividerPanel.SuspendLayout();
+            this.offsetPanel.SuspendLayout();
             this.customMatrixFieldsGroupBox.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel10.SuspendLayout();
-            this.panel8.SuspendLayout();
-            this.panel7.SuspendLayout();
-            this.panel9.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roundBrushRadiusTrackBar)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -119,6 +120,10 @@
             this.editorPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.editorPictureBox.TabIndex = 0;
             this.editorPictureBox.TabStop = false;
+            this.editorPictureBox.Click += new System.EventHandler(this.editorPictureBox_Click);
+            this.editorPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.editorPictureBox_MouseDown);
+            this.editorPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.editorPictureBox_MouseMove);
+            this.editorPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.editorPictureBox_MouseUp);
             // 
             // panel2
             // 
@@ -178,9 +183,9 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.panel8);
             this.groupBox4.Controls.Add(this.customMatrixFieldsGroupBox);
             this.groupBox4.Controls.Add(this.panel10);
-            this.groupBox4.Controls.Add(this.panel8);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox4.Location = new System.Drawing.Point(0, 155);
             this.groupBox4.Name = "groupBox4";
@@ -189,6 +194,76 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Filtering Matrix Properties";
             // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.dividerPanel);
+            this.panel8.Controls.Add(this.offsetPanel);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(3, 320);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(241, 77);
+            this.panel8.TabIndex = 16;
+            // 
+            // dividerPanel
+            // 
+            this.dividerPanel.Controls.Add(this.label2);
+            this.dividerPanel.Controls.Add(this.dividerTextBox);
+            this.dividerPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dividerPanel.Enabled = false;
+            this.dividerPanel.Location = new System.Drawing.Point(0, 32);
+            this.dividerPanel.Name = "dividerPanel";
+            this.dividerPanel.Size = new System.Drawing.Size(241, 35);
+            this.dividerPanel.TabIndex = 12;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.label2.Size = new System.Drawing.Size(77, 20);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Divider";
+            // 
+            // dividerTextBox
+            // 
+            this.dividerTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dividerTextBox.Location = new System.Drawing.Point(191, 0);
+            this.dividerTextBox.Name = "dividerTextBox";
+            this.dividerTextBox.Size = new System.Drawing.Size(50, 27);
+            this.dividerTextBox.TabIndex = 2;
+            // 
+            // offsetPanel
+            // 
+            this.offsetPanel.Controls.Add(this.label1);
+            this.offsetPanel.Controls.Add(this.offsetTextBox);
+            this.offsetPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.offsetPanel.Enabled = false;
+            this.offsetPanel.Location = new System.Drawing.Point(0, 0);
+            this.offsetPanel.Name = "offsetPanel";
+            this.offsetPanel.Size = new System.Drawing.Size(241, 32);
+            this.offsetPanel.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.label1.Size = new System.Drawing.Size(69, 20);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Offset";
+            // 
+            // offsetTextBox
+            // 
+            this.offsetTextBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.offsetTextBox.Location = new System.Drawing.Point(191, 0);
+            this.offsetTextBox.Name = "offsetTextBox";
+            this.offsetTextBox.Size = new System.Drawing.Size(50, 27);
+            this.offsetTextBox.TabIndex = 1;
+            // 
             // customMatrixFieldsGroupBox
             // 
             this.customMatrixFieldsGroupBox.Controls.Add(this.flowLayoutPanel1);
@@ -196,7 +271,7 @@
             this.customMatrixFieldsGroupBox.Enabled = false;
             this.customMatrixFieldsGroupBox.Location = new System.Drawing.Point(3, 171);
             this.customMatrixFieldsGroupBox.Name = "customMatrixFieldsGroupBox";
-            this.customMatrixFieldsGroupBox.Size = new System.Drawing.Size(241, 138);
+            this.customMatrixFieldsGroupBox.Size = new System.Drawing.Size(241, 149);
             this.customMatrixFieldsGroupBox.TabIndex = 15;
             this.customMatrixFieldsGroupBox.TabStop = false;
             this.customMatrixFieldsGroupBox.Text = "Custom Matrix";
@@ -310,6 +385,7 @@
             this.customMatrixRadioButton.Tag = "matrixProps";
             this.customMatrixRadioButton.Text = "Custom matrix 3x3";
             this.customMatrixRadioButton.UseVisualStyleBackColor = true;
+            this.customMatrixRadioButton.CheckedChanged += new System.EventHandler(this.customMatrixRadioButton_CheckedChanged);
             // 
             // negativeRadioButton
             // 
@@ -379,76 +455,11 @@
             this.identityRadioButton.Tag = "matrixProps";
             this.identityRadioButton.Text = "Identity";
             this.identityRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.panel7);
-            this.panel8.Controls.Add(this.panel9);
-            this.panel8.Location = new System.Drawing.Point(6, 287);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(133, 77);
-            this.panel8.TabIndex = 12;
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.label2);
-            this.panel7.Controls.Add(this.dividerTextBox);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel7.Location = new System.Drawing.Point(0, 32);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(133, 35);
-            this.panel7.TabIndex = 12;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.label2.Size = new System.Drawing.Size(77, 20);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Divider";
-            // 
-            // dividerTextBox
-            // 
-            this.dividerTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dividerTextBox.Location = new System.Drawing.Point(83, 0);
-            this.dividerTextBox.Name = "dividerTextBox";
-            this.dividerTextBox.Size = new System.Drawing.Size(50, 27);
-            this.dividerTextBox.TabIndex = 2;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.label1);
-            this.panel9.Controls.Add(this.offsetTextBox);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(0, 0);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(133, 32);
-            this.panel9.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.label1.Size = new System.Drawing.Size(69, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Offset";
-            // 
-            // offsetTextBox
-            // 
-            this.offsetTextBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.offsetTextBox.Location = new System.Drawing.Point(83, 0);
-            this.offsetTextBox.Name = "offsetTextBox";
-            this.offsetTextBox.Size = new System.Drawing.Size(50, 27);
-            this.offsetTextBox.TabIndex = 1;
+            this.identityRadioButton.CheckedChanged += new System.EventHandler(this.identityRadioButton_CheckedChanged);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.addPolygonButton);
             this.groupBox3.Controls.Add(this.PolygonRegionRadioBttn);
             this.groupBox3.Controls.Add(this.roundBrushRadiusTrackBar);
             this.groupBox3.Controls.Add(this.roundBrushRadioBttn);
@@ -461,18 +472,31 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filtering region";
             // 
+            // addPolygonButton
+            // 
+            this.addPolygonButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.addPolygonButton.Enabled = false;
+            this.addPolygonButton.Location = new System.Drawing.Point(166, 127);
+            this.addPolygonButton.Name = "addPolygonButton";
+            this.addPolygonButton.Size = new System.Drawing.Size(78, 25);
+            this.addPolygonButton.TabIndex = 6;
+            this.addPolygonButton.Text = "Add";
+            this.addPolygonButton.UseVisualStyleBackColor = true;
+            this.addPolygonButton.Click += new System.EventHandler(this.addPolygonButton_Click);
+            // 
             // PolygonRegionRadioBttn
             // 
             this.PolygonRegionRadioBttn.AutoSize = true;
-            this.PolygonRegionRadioBttn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.PolygonRegionRadioBttn.Dock = System.Windows.Forms.DockStyle.Left;
             this.PolygonRegionRadioBttn.Location = new System.Drawing.Point(3, 127);
             this.PolygonRegionRadioBttn.Name = "PolygonRegionRadioBttn";
-            this.PolygonRegionRadioBttn.Size = new System.Drawing.Size(241, 24);
-            this.PolygonRegionRadioBttn.TabIndex = 3;
+            this.PolygonRegionRadioBttn.Size = new System.Drawing.Size(130, 25);
+            this.PolygonRegionRadioBttn.TabIndex = 5;
             this.PolygonRegionRadioBttn.TabStop = true;
             this.PolygonRegionRadioBttn.Tag = "region";
             this.PolygonRegionRadioBttn.Text = "Polygon region";
             this.PolygonRegionRadioBttn.UseVisualStyleBackColor = true;
+            this.PolygonRegionRadioBttn.CheckedChanged += new System.EventHandler(this.PolygonRegionRadioBttn_CheckedChanged);
             // 
             // roundBrushRadiusTrackBar
             // 
@@ -495,6 +519,7 @@
             this.roundBrushRadioBttn.Tag = "region";
             this.roundBrushRadioBttn.Text = "Round brush";
             this.roundBrushRadioBttn.UseVisualStyleBackColor = true;
+            this.roundBrushRadioBttn.CheckedChanged += new System.EventHandler(this.roundBrushRadioBttn_CheckedChanged);
             // 
             // entireImageRadioBttn
             // 
@@ -508,6 +533,7 @@
             this.entireImageRadioBttn.Tag = "region";
             this.entireImageRadioBttn.Text = "Entire image";
             this.entireImageRadioBttn.UseVisualStyleBackColor = true;
+            this.entireImageRadioBttn.CheckedChanged += new System.EventHandler(this.entireImageRadioBttn_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -606,16 +632,16 @@
             this.groupBox2.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.dividerPanel.ResumeLayout(false);
+            this.dividerPanel.PerformLayout();
+            this.offsetPanel.ResumeLayout(false);
+            this.offsetPanel.PerformLayout();
             this.customMatrixFieldsGroupBox.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
-            this.panel8.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.roundBrushRadiusTrackBar)).EndInit();
@@ -647,15 +673,7 @@
         private PictureBox redHistogramPictureBox;
         private Panel panel6;
         private GroupBox groupBox4;
-        private Panel panel8;
-        private Panel panel7;
-        private Label label2;
-        private TextBox dividerTextBox;
-        private Panel panel9;
-        private Label label1;
-        private TextBox offsetTextBox;
         private GroupBox groupBox3;
-        private RadioButton PolygonRegionRadioBttn;
         private TrackBar roundBrushRadiusTrackBar;
         private RadioButton roundBrushRadioBttn;
         private RadioButton entireImageRadioBttn;
@@ -679,5 +697,14 @@
         private TextBox matrix33TextBox;
         private RadioButton customMatrixRadioButton;
         private RadioButton negativeRadioButton;
+        private Panel panel8;
+        private Panel dividerPanel;
+        private Label label2;
+        private TextBox dividerTextBox;
+        private Panel offsetPanel;
+        private Label label1;
+        private TextBox offsetTextBox;
+        private Button addPolygonButton;
+        private RadioButton PolygonRegionRadioBttn;
     }
 }
